@@ -1,4 +1,4 @@
-# deeplens_update
+# RealSky
 
 deeplens_update is an updated simulation pipeline for the deeplens ML4SCI collaboration. Functionally, deeplens_update is a wrapper package for lenstronomy and pyhalo that incorporates real astronomical images and utilizes a physically accurate sampling of galaxy and halo parameters. 
 
