@@ -1,7 +1,7 @@
 import numpy as np
 import torch
-from new_pipeline_mp.sampling.Camels_NF_Architecture import build_conditional_flow
-from new_pipeline_mp.paths.paths import PROJECT_ROOT
+from RealSky_pipeline.sampling.Camels_NF_Architecture import build_conditional_flow
+from RealSky_pipeline.paths.paths import PROJECT_ROOT
 
 def load_camels_flow(checkpoint_path=PROJECT_ROOT/"checkpoints"/"trained_Camels_flow.pt", device="cpu"):
     """

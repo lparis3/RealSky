@@ -1,6 +1,6 @@
 import numpy as np
 
-from new_pipeline_mp.observations.preprocessing import src_process
+from RealSky_pipeline.observations.preprocessing import src_process
 
 
 def center_extraction(image):

@@ -1,7 +1,7 @@
 import numpy as np
 import torch
-from new_pipeline_mp.sampling.lenspop_NF_Architecture import build_joint_flow
-from new_pipeline_mp.paths.paths import PROJECT_ROOT
+from RealSky_pipeline.sampling.lenspop_NF_Architecture import build_joint_flow
+from RealSky_pipeline.paths.paths import PROJECT_ROOT
 
 def load_lenspop_flow(checkpoint_path=PROJECT_ROOT/"checkpoints"/"trained_Lenspop_flow.pt", device="cpu"):
     """

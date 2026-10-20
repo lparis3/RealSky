@@ -1,15 +1,15 @@
 import numpy as np
 
-from new_pipeline_mp.structures.dataclasses import sampled_values 
-from new_pipeline_mp.sampling.lenspop_sampler import (
+from RealSky_pipeline.structures.dataclasses import sampled_values 
+from RealSky_pipeline.sampling.lenspop_sampler import (
     load_lenspop_flow,
     sample_lenspop
 )
-from new_pipeline_mp.sampling.camels_sampler import (
+from RealSky_pipeline.sampling.camels_sampler import (
     load_camels_flow,
     sample_camels
 )
-from new_pipeline_mp.physics.mass_conversion import lensing_params_to_gnfw_m200
+from RealSky_pipeline.physics.mass_conversion import lensing_params_to_gnfw_m200
 
 
 def sampler_master_function():

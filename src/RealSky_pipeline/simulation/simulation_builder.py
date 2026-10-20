@@ -1,15 +1,15 @@
 # src/model_alpha_pipeline_mp/simulation/simulation_builder.py
 import time
 
-from new_pipeline_mp.simulation.lensing_setup import build_lensing_setup
-from new_pipeline_mp.simulation.image_generation import generate_images
-from new_pipeline_mp.simulation.output_writer import write_simulation_output
+from RealSky_pipeline.simulation.lensing_setup import build_lensing_setup
+from RealSky_pipeline.simulation.image_generation import generate_images
+from RealSky_pipeline.simulation.output_writer import write_simulation_output
 
 
-def dlu_3_collect(DM_type, Instrument, sampled_vals, dlu_1_results, dlu_2_results,
+def RS_3_collect(DM_type, Instrument, sampled_vals, RS_1_results, RS_2_results,
                   light_profile='INTERPOL', nss=True):
     """
-    Computation half of the original dlu_3: builds the lensing setup and
+    Computation half of the original RS_3: builds the lensing setup and
     renders images, but does NOT write anything to HDF5.
 
     Parameters
@@ -36,15 +36,15 @@ def dlu_3_collect(DM_type, Instrument, sampled_vals, dlu_1_results, dlu_2_result
 
     setup_results = build_lensing_setup(
         sampled_vals=sampled_vals,
-        dlu_1_results=dlu_1_results,
-        dlu_2_results=dlu_2_results,
+        RS_1_results=RS_1_results,
+        RS_2_results=RS_2_results,
         light_profile=light_profile,
     )
 
     image_results = generate_images(Instrument,
         setup_results=setup_results,
-        dlu_1_results=dlu_1_results,
-        dlu_2_results=dlu_2_results,
+        RS_1_results=RS_1_results,
+        RS_2_results=RS_2_results,
         nss=nss,
     )
 
@@ -54,24 +54,24 @@ def dlu_3_collect(DM_type, Instrument, sampled_vals, dlu_1_results, dlu_2_result
     return setup_results, image_results
 
 
-def dlu_3(i, DM_type, Instrument, hf, timestamp,
-          sampled_vals, dlu_1_results, dlu_2_results,
+def RS_3(i, DM_type, Instrument, hf, timestamp,
+          sampled_vals, RS_1_results, RS_2_results,
           light_profile='INTERPOL', nss=True):
     """
     Legacy single-process entrypoint, preserved so any non-parallel callers
-    of dlu_3 still work.
+    of RS_3 still work.
 
-    Runs the computation via dlu_3_collect, then writes results to the given
+    Runs the computation via RS_3_collect, then writes results to the given
     open HDF5 file handle using the new collect+write split in output_writer.
     """
-    from new_pipeline_mp.simulation.output_writer import collect_simulation_output
+    from RealSky_pipeline.simulation.output_writer import collect_simulation_output
 
-    setup_results, image_results = dlu_3_collect(
+    setup_results, image_results = RS_3_collect(
         DM_type=DM_type,
         Instrument=Instrument,
         sampled_vals=sampled_vals,
-        dlu_1_results=dlu_1_results,
-        dlu_2_results=dlu_2_results,
+        RS_1_results=RS_1_results,
+        RS_2_results=RS_2_results,
         light_profile=light_profile,
         nss=nss,
     )
@@ -82,8 +82,8 @@ def dlu_3(i, DM_type, Instrument, hf, timestamp,
         Instrument=Instrument,
         timestamp=timestamp,
         sampled_vals=sampled_vals,
-        dlu_1_results=dlu_1_results,
-        dlu_2_results=dlu_2_results,
+        RS_1_results=RS_1_results,
+        RS_2_results=RS_2_results,
         setup_results=setup_results,
         image_results=image_results,
     )

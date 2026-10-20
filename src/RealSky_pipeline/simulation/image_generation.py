@@ -294,7 +294,7 @@ def simulate(Instrument,kwargs_numerics,band_kwargs,lens_light_kwargs,source_lig
 
 
 
-def generate_images(Instrument, setup_results, dlu_1_results, dlu_2_results, nss=True):
+def generate_images(Instrument, setup_results, RS_1_results, RS_2_results, nss=True):
     """Render the lensed images plus the convergence map and unlensed source.
 
     nss : bool
@@ -307,7 +307,7 @@ def generate_images(Instrument, setup_results, dlu_1_results, dlu_2_results, nss
     """
     kwargs_numerics = {'point_source_supersampling_factor': 1}
 
-    sim_results = simulate(Instrument=Instrument,kwargs_numerics=kwargs_numerics,band_kwargs=dlu_2_results.bands,lens_light_kwargs=setup_results['kwargs_lens_light_mag'],source_light_kwargs=setup_results['kwargs_source_mag'],lens_nonlight_kwargs=dlu_1_results.lens_kwargs_list,kwargs_model_=setup_results['kwargs_model'])
+    sim_results = simulate(Instrument=Instrument,kwargs_numerics=kwargs_numerics,band_kwargs=RS_2_results.bands,lens_light_kwargs=setup_results['kwargs_lens_light_mag'],source_light_kwargs=setup_results['kwargs_source_mag'],lens_nonlight_kwargs=RS_1_results.lens_kwargs_list,kwargs_model_=setup_results['kwargs_model'])
 
     # Fail loudly on non-finite images instead of letting NaN/inf propagate silently
     # into SNR and sns_diff below. A common cause is a band config with
@@ -347,7 +347,7 @@ def generate_images(Instrument, setup_results, dlu_1_results, dlu_2_results, nss
 
     if nss:
         # macro-only ("no substructure") render and the substructure comparisons.
-        sim_results_nss = simulate(Instrument=Instrument,kwargs_numerics=kwargs_numerics,band_kwargs=dlu_2_results.bands,lens_light_kwargs=setup_results['kwargs_lens_light_mag'],source_light_kwargs=setup_results['kwargs_source_mag'],lens_nonlight_kwargs=setup_results['macro_kwargs_list_nss'],kwargs_model_=setup_results['kwargs_model_nss'])
+        sim_results_nss = simulate(Instrument=Instrument,kwargs_numerics=kwargs_numerics,band_kwargs=RS_2_results.bands,lens_light_kwargs=setup_results['kwargs_lens_light_mag'],source_light_kwargs=setup_results['kwargs_source_mag'],lens_nonlight_kwargs=setup_results['macro_kwargs_list_nss'],kwargs_model_=setup_results['kwargs_model_nss'])
         _assert_finite(sim_results_nss, "img_nss")
 
         img_nss = list(sim_results_nss[:-3])

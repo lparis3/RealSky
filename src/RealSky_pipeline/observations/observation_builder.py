@@ -1,7 +1,7 @@
 import time
 import numpy as np
-from new_pipeline_mp.structures.dataclasses import dlu_2_output
-from new_pipeline_mp.observations.selection import extraction
+from RealSky_pipeline.structures.dataclasses import RS_2_output
+from RealSky_pipeline.observations.selection import extraction
 
 # ---------------------------------------------------------------------------
 # Per-instrument exposure-count scaling -- the SNR tuning knob.
@@ -116,7 +116,7 @@ def instrument_config(Instrument):
 
 
 
-def dlu_2(Instrument,observational_data,z_pair,redshift_bin_edges,light_profile='INTERPOL'):
+def RS_2(Instrument,observational_data,z_pair,redshift_bin_edges,light_profile='INTERPOL'):
     '''Chooses real observations of galaxies to be used as light profile for source and lens.
 
     Parameters
@@ -154,7 +154,7 @@ def dlu_2(Instrument,observational_data,z_pair,redshift_bin_edges,light_profile=
     end2 = time.time()
     #print(f'Step 3 took {end2-start2} secs')
 
-    results = dlu_2_output(bands=bands,
+    results = RS_2_output(bands=bands,
                            band_labels=band_labels,
                            needed_hsc_bands=needed_hsc_bands,
                            source_images = source_images,

@@ -1,0 +1,473 @@
+cff-version: 1.2.0
+message: >-
+  If you use this software or the data it produces, please cite it using the
+  metadata below. Please also cite the input datasets and papers listed under
+  "references", as requested by their authors.
+title: "RealSky"
+type: software
+authors:
+  - family-names: Paris
+    given-names: Lucca
+    # orcid: "https://orcid.org/0000-0000-0000-0000"
+repository-code: "https://github.com/lparis3/deeplens_update"
+# license: MIT
+# version: 1.0.0
+# date-released: 2026-10-20
+
+references:
+  # ---------------------------------------------------------------------------
+  # 1. Observational galaxy images: GalaxiesML
+  # ---------------------------------------------------------------------------
+  - type: data
+    title: "Data for GalaxiesML: an imaging and photometric dataset of galaxies for machine learning"
+    authors:
+      - family-names: Do
+        given-names: Tuan
+        orcid: "https://orcid.org/0000-0001-9554-6062"
+      - family-names: Jones
+        given-names: Evan
+        orcid: "https://orcid.org/0000-0001-7725-2546"
+      - family-names: Boscoe
+        given-names: Bernie
+        orcid: "https://orcid.org/0000-0002-9533-3531"
+      - family-names: Li
+        given-names: Yun Qi
+      - family-names: Alfaro
+        given-names: Kevin
+    publisher:
+      name: Zenodo
+    version: v6
+    date-released: 2024-05-06
+    doi: 10.5281/zenodo.11117528
+    url: "https://zenodo.org/records/11117528"
+    license: CC-BY-4.0
+
+  - type: article
+    title: "GalaxiesML: a dataset of galaxy images, photometry, redshifts, and structural parameters for machine learning"
+    authors:
+      - family-names: Do
+        given-names: Tuan
+      - family-names: Boscoe
+        given-names: Bernie
+      - family-names: Jones
+        given-names: Evan
+      - family-names: Li
+        given-names: Yun Qi
+      - family-names: Alfaro
+        given-names: Kevin
+    year: 2024
+    journal: "arXiv e-prints"
+    identifiers:
+      - type: other
+        value: "arXiv:2410.00271"
+    url: "https://arxiv.org/abs/2410.00271"
+
+  # Requested by the GalaxiesML authors: the underlying HSC imaging survey.
+  - type: article
+    title: "Second data release of the Hyper Suprime-Cam Subaru Strategic Program"
+    authors:
+      - family-names: Aihara
+        given-names: Hiroaki
+      - name: "et al."
+    year: 2019
+    journal: "Publications of the Astronomical Society of Japan"
+    volume: 71
+    issue: 6
+    start: 114
+    doi: 10.1093/pasj/psz103
+
+  # Optional citations listed by the GalaxiesML authors: spectroscopic
+  # redshift surveys used to build the ground-truth redshifts.
+  - type: article
+    title: "The zCOSMOS 10k-Bright Spectroscopic Sample"
+    authors:
+      - family-names: Lilly
+        given-names: Simon J.
+      - name: "et al."
+    year: 2009
+    journal: "The Astrophysical Journal Supplement Series"
+    volume: 184
+    issue: 2
+    start: 218
+    end: 229
+    doi: 10.1088/0067-0049/184/2/218
+
+  - type: article
+    title: "The VIMOS Public Extragalactic Survey (VIPERS): First Data Release of 57,204 Spectroscopic Measurements"
+    authors:
+      - family-names: Garilli
+        given-names: Bianca
+      - name: "et al."
+    year: 2014
+    journal: "Astronomy & Astrophysics"
+    volume: 562
+    start: A23
+    doi: 10.1051/0004-6361/201322790
+
+  - type: article
+    title: "The DEEP2 Galaxy Redshift Survey: Design, Observations, Data Reduction, and Redshifts"
+    authors:
+      - family-names: Newman
+        given-names: Jeffrey A.
+      - name: "et al."
+    year: 2013
+    journal: "The Astrophysical Journal Supplement Series"
+    volume: 208
+    issue: 1
+    start: 5
+    doi: 10.1088/0067-0049/208/1/5
+
+  # ---------------------------------------------------------------------------
+  # 2. Strong-lensing population parameters: LensPop
+  # ---------------------------------------------------------------------------
+  - type: software
+    title: "LensPop"
+    authors:
+      - family-names: Collett
+        given-names: Thomas E.
+    repository-code: "https://github.com/tcollett/LensPop"
+    notes: >-
+      The author asks users to cite Collett (2015) and to email
+      thomas.collett@port.ac.uk to say they are using the code.
+
+  - type: article
+    title: "The population of galaxy-galaxy strong lenses in forthcoming optical imaging surveys"
+    authors:
+      - family-names: Collett
+        given-names: Thomas E.
+    year: 2015
+    journal: "The Astrophysical Journal"
+    volume: 811
+    issue: 1
+    start: 20
+    doi: 10.1088/0004-637X/811/1/20
+    identifiers:
+      - type: other
+        value: "arXiv:1507.02657"
+
+  # ---------------------------------------------------------------------------
+  # 3. CAMELS public data release (IllustrisTNG suite, CV set, FOF/Subfind)
+  # ---------------------------------------------------------------------------
+  - type: data
+    title: "CAMELS Public Data Release: IllustrisTNG suite, CV set, FOF/Subfind halo and subhalo catalogs"
+    authors:
+      - name: "The CAMELS Collaboration"
+    url: "https://camels.readthedocs.io/en/latest/data_access.html"
+    notes: "Accessed from the CAMELS public release (FOF_Subfind > IllustrisTNG > CV)."
+
+  - type: article
+    title: "The CAMELS Project: Public Data Release"
+    authors:
+      - family-names: Villaescusa-Navarro
+        given-names: Francisco
+      - family-names: Genel
+        given-names: Shy
+      - family-names: Anglés-Alcázar
+        given-names: Daniel
+      - family-names: Perez
+        given-names: Lucia A.
+      - family-names: Villanueva-Domingo
+        given-names: Pablo
+      - family-names: Wadekar
+        given-names: Digvijay
+      - family-names: Shao
+        given-names: Helen
+      - family-names: Mohammad
+        given-names: Faizan G.
+      - family-names: Hassan
+        given-names: Sultan
+      - family-names: Moser
+        given-names: Emily
+      - family-names: Lau
+        given-names: Erwin T.
+      - family-names: Machado Poletti Valle
+        given-names: Luis Fernando
+      - family-names: Nicola
+        given-names: Andrina
+      - family-names: Thiele
+        given-names: Leander
+      - family-names: Jo
+        given-names: Yongseok
+      - family-names: Philcox
+        given-names: Oliver H. E.
+      - family-names: Oppenheimer
+        given-names: Benjamin D.
+      - family-names: Tillman
+        given-names: Megan
+      - family-names: Hahn
+        given-names: ChangHoon
+      - family-names: Kaushal
+        given-names: Neerav
+      - family-names: Pisani
+        given-names: Alice
+      - family-names: Gebhardt
+        given-names: Matthew
+      - family-names: Delgado
+        given-names: Ana Maria
+      - family-names: Caliendo
+        given-names: Joyce
+      - family-names: Kreisch
+        given-names: Christina
+      - family-names: Wong
+        given-names: Kaze W. K.
+      - family-names: Coulton
+        given-names: William R.
+      - family-names: Eickenberg
+        given-names: Michael
+      - family-names: Parimbelli
+        given-names: Gabriele
+      - family-names: Ni
+        given-names: Yueying
+      - family-names: Steinwandel
+        given-names: Ulrich P.
+      - family-names: La Torre
+        given-names: Valentina
+      - family-names: Dave
+        given-names: Romeel
+      - family-names: Battaglia
+        given-names: Nicholas
+      - family-names: Nagai
+        given-names: Daisuke
+      - family-names: Spergel
+        given-names: David N.
+      - family-names: Hernquist
+        given-names: Lars
+      - family-names: Burkhart
+        given-names: Blakesley
+      - family-names: Narayanan
+        given-names: Desika
+      - family-names: Wandelt
+        given-names: Benjamin
+      - family-names: Somerville
+        given-names: Rachel S.
+      - family-names: Bryan
+        given-names: Greg L.
+      - family-names: Viel
+        given-names: Matteo
+      - family-names: Li
+        given-names: Yin
+      - family-names: Irsic
+        given-names: Vid
+      - family-names: Kraljic
+        given-names: Katarina
+      - family-names: Marinacci
+        given-names: Federico
+      - family-names: Vogelsberger
+        given-names: Mark
+    year: 2023
+    journal: "The Astrophysical Journal Supplement Series"
+    volume: 265
+    issue: 2
+    start: 54
+    doi: 10.3847/1538-4365/acbf47
+    identifiers:
+      - type: other
+        value: "arXiv:2201.01300"
+
+  # Recommended on the CAMELS citation page; introduces the original suites
+  # (including the IllustrisTNG CV set).
+  - type: article
+    title: "The CAMELS Project: Cosmology and Astrophysics with Machine-learning Simulations"
+    authors:
+      - family-names: Villaescusa-Navarro
+        given-names: Francisco
+      - family-names: Anglés-Alcázar
+        given-names: Daniel
+      - family-names: Genel
+        given-names: Shy
+      - family-names: Spergel
+        given-names: David N.
+      - family-names: Somerville
+        given-names: Rachel S.
+      - family-names: Dave
+        given-names: Romeel
+      - family-names: Pillepich
+        given-names: Annalisa
+      - family-names: Hernquist
+        given-names: Lars
+      - family-names: Nelson
+        given-names: Dylan
+      - family-names: Torrey
+        given-names: Paul
+      - family-names: Narayanan
+        given-names: Desika
+      - family-names: Li
+        given-names: Yin
+      - family-names: Philcox
+        given-names: Oliver
+      - family-names: La Torre
+        given-names: Valentina
+      - family-names: Delgado
+        given-names: Ana Maria
+      - family-names: Ho
+        given-names: Shirley
+      - family-names: Hassan
+        given-names: Sultan
+      - family-names: Burkhart
+        given-names: Blakesley
+      - family-names: Wadekar
+        given-names: Digvijay
+      - family-names: Battaglia
+        given-names: Nicholas
+      - family-names: Contardo
+        given-names: Gabriella
+      - family-names: Bryan
+        given-names: Greg L.
+    year: 2021
+    journal: "The Astrophysical Journal"
+    volume: 915
+    issue: 1
+    start: 71
+    doi: 10.3847/1538-4357/abf7ba
+    identifiers:
+      - type: other
+        value: "arXiv:2010.00619"
+
+  # --- IllustrisTNG model and simulation papers ---
+  - type: article
+    title: "Simulating galaxy formation with black hole driven thermal and kinetic feedback"
+    authors:
+      - family-names: Weinberger
+        given-names: Rainer
+      - family-names: Springel
+        given-names: Volker
+      - family-names: Hernquist
+        given-names: Lars
+      - family-names: Pillepich
+        given-names: Annalisa
+      - family-names: Marinacci
+        given-names: Federico
+      - family-names: Pakmor
+        given-names: Rüdiger
+      - family-names: Nelson
+        given-names: Dylan
+      - family-names: Genel
+        given-names: Shy
+      - family-names: Vogelsberger
+        given-names: Mark
+      - family-names: Naiman
+        given-names: Jill
+      - family-names: Torrey
+        given-names: Paul
+    year: 2017
+    journal: "Monthly Notices of the Royal Astronomical Society"
+    volume: 465
+    issue: 3
+    start: 3291
+    end: 3308
+    doi: 10.1093/mnras/stw2944
+    identifiers:
+      - type: other
+        value: "arXiv:1607.03486"
+
+  - type: article
+    title: "Simulating galaxy formation with the IllustrisTNG model"
+    authors:
+      - family-names: Pillepich
+        given-names: Annalisa
+      - family-names: Springel
+        given-names: Volker
+      - family-names: Nelson
+        given-names: Dylan
+      - family-names: Genel
+        given-names: Shy
+      - family-names: Naiman
+        given-names: Jill
+      - family-names: Pakmor
+        given-names: Rüdiger
+      - family-names: Hernquist
+        given-names: Lars
+      - family-names: Torrey
+        given-names: Paul
+      - family-names: Vogelsberger
+        given-names: Mark
+      - family-names: Weinberger
+        given-names: Rainer
+      - family-names: Marinacci
+        given-names: Federico
+    year: 2018
+    journal: "Monthly Notices of the Royal Astronomical Society"
+    volume: 473
+    issue: 3
+    start: 4077
+    end: 4106
+    doi: 10.1093/mnras/stx2656
+    identifiers:
+      - type: other
+        value: "arXiv:1703.02970"
+
+  - type: article
+    title: "First results from the IllustrisTNG simulations: the stellar mass content of groups and clusters of galaxies"
+    authors:
+      - family-names: Pillepich
+        given-names: Annalisa
+      - family-names: Nelson
+        given-names: Dylan
+      - family-names: Hernquist
+        given-names: Lars
+      - family-names: Springel
+        given-names: Volker
+      - family-names: Pakmor
+        given-names: Rüdiger
+      - family-names: Torrey
+        given-names: Paul
+      - family-names: Weinberger
+        given-names: Rainer
+      - family-names: Genel
+        given-names: Shy
+      - family-names: Naiman
+        given-names: Jill P.
+      - family-names: Marinacci
+        given-names: Federico
+      - family-names: Vogelsberger
+        given-names: Mark
+    year: 2018
+    journal: "Monthly Notices of the Royal Astronomical Society"
+    volume: 475
+    issue: 1
+    start: 648
+    end: 675
+    doi: 10.1093/mnras/stx3112
+    identifiers:
+      - type: other
+        value: "arXiv:1707.03406"
+
+  - type: article
+    title: "The IllustrisTNG simulations: public data release"
+    authors:
+      - family-names: Nelson
+        given-names: Dylan
+      - family-names: Springel
+        given-names: Volker
+      - family-names: Pillepich
+        given-names: Annalisa
+      - family-names: Rodriguez-Gomez
+        given-names: Vicente
+      - family-names: Torrey
+        given-names: Paul
+      - family-names: Genel
+        given-names: Shy
+      - family-names: Vogelsberger
+        given-names: Mark
+      - family-names: Pakmor
+        given-names: Rüdiger
+      - family-names: Marinacci
+        given-names: Federico
+      - family-names: Weinberger
+        given-names: Rainer
+      - family-names: Kelley
+        given-names: Luke
+      - family-names: Lovell
+        given-names: Mark
+      - family-names: Diemer
+        given-names: Benedikt
+      - family-names: Hernquist
+        given-names: Lars
+    year: 2019
+    journal: "Computational Astrophysics and Cosmology"
+    volume: 6
+    start: 2
+    doi: 10.1186/s40668-019-0028-x
+    identifiers:
+      - type: other
+        value: "arXiv:1812.05609"

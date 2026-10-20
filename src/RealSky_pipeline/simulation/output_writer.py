@@ -8,8 +8,8 @@ def collect_simulation_output(
     Instrument,
     timestamp,
     sampled_vals,
-    dlu_1_results,
-    dlu_2_results,
+    RS_1_results,
+    RS_2_results,
     setup_results,
     image_results,
 ):
@@ -29,19 +29,19 @@ def collect_simulation_output(
     zdeflector = sampled_vals.redshifts[0]
     zsource = sampled_vals.redshifts[1]
 
-    DL = dlu_1_results.cosmology.angular_diameter_distance(zdeflector) / 1000
-    DS = dlu_1_results.cosmology.angular_diameter_distance(zsource) / 1000
-    DLS = dlu_1_results.cosmology.angular_diameter_distance_z1z2(zdeflector, zsource) / 1000
+    DL = RS_1_results.cosmology.angular_diameter_distance(zdeflector) / 1000
+    DS = RS_1_results.cosmology.angular_diameter_distance(zsource) / 1000
+    DLS = RS_1_results.cosmology.angular_diameter_distance_z1z2(zdeflector, zsource) / 1000
 
     # Number of bands the instrument actually writes (e.g. 3 for LSST/DES,
     # 1 for Euclid). We index everything off band_labels so we don't
     # assume a fixed g/r/i layout.
-    n_bands = len(dlu_2_results.band_labels)
+    n_bands = len(RS_2_results.band_labels)
 
     # Detect SERSIC vs INTERPOL light profile from the dataclass. Robust
     # to the caller forgetting to pass a flag: if Sersic params are
     # present, we're in SERSIC mode.
-    is_sersic = getattr(dlu_2_results, 'source_sersic_params', None) is not None
+    is_sersic = getattr(RS_2_results, 'source_sersic_params', None) is not None
     light_profile_label = 'SERSIC' if is_sersic else 'INTERPOL'
 
     # exposure_time: one entry per band plus trailing comment.
@@ -49,7 +49,7 @@ def collect_simulation_output(
     exposure_time_entry.append('Exposure time in seconds for all bands')
 
     # bands: one label per band plus trailing comment.
-    bands_entry = list(dlu_2_results.band_labels) + ['Instrument bands in which image was simulated']
+    bands_entry = list(RS_2_results.band_labels) + ['Instrument bands in which image was simulated']
 
     datasets = {
         'd_l': [str(DL), 'Angular diameter distance to deflector galaxy in Gpc'],
@@ -59,13 +59,13 @@ def collect_simulation_output(
         'instrument': [Instrument, 'Instrument'],
         'log_mhigh': [str(np.log10(sampled_vals.max_subhalo_mass)), 'Log10 of largest possible subhalo mass'],
         'log_mlow': [str(6), 'Log10 of lowest possible subhalo mass'],
-        'host_mass': [str(np.log10(dlu_1_results.host_mass)), 'Log10 of mass of host lens in units of M_sun'],
-        'lens_mass': [str(np.log10(dlu_1_results.whole_halo_mass)), 'Log10 of mass of entire lens in units of M_sun'],
-        'num_subhalos': [str(dlu_1_results.num_subhalos), 'Number of subhalos'],
+        'host_mass': [str(np.log10(RS_1_results.host_mass)), 'Log10 of mass of host lens in units of M_sun'],
+        'lens_mass': [str(np.log10(RS_1_results.whole_halo_mass)), 'Log10 of mass of entire lens in units of M_sun'],
+        'num_subhalos': [str(RS_1_results.num_subhalos), 'Number of subhalos'],
         'r_tidal': [str(0.25), 'see Pyhalo documentation'],
         'sigma_sub': [str(0.025), 'see Pyhalo documentation'],
         'snr': [str(image_results['SNR']), 'SNR of lensed in all bands'],
-        'theta_e': [str(dlu_1_results.macro_kwargs_list[0]['theta_E']), 'Einstein radius in arcseconds'],
+        'theta_e': [str(RS_1_results.macro_kwargs_list[0]['theta_E']), 'Einstein radius in arcseconds'],
         'uid': [str(i), f'simulation number in {DM_type} batch created on {timestamp}'],
         'z_lens': [str(zdeflector), 'Redshift of deflector'],
         'z_source': [str(zsource), 'Redshift of source'],
@@ -73,9 +73,9 @@ def collect_simulation_output(
         'DM_type': [DM_type, 'Type of dark matter assumed'],
         'source_pos': [str([setup_results['source_x'], setup_results['source_y']]),
                        'Plane coordinates of source wrt center of deflector (in arcseconds)'],
-        'host_slope': [str(dlu_1_results.slope_Host), 'EPL slope of host halo'],
-        'ellipticity': [str([dlu_1_results.macro_kwargs_list[0]['e1'],
-                             dlu_1_results.macro_kwargs_list[0]['e2']]),
+        'host_slope': [str(RS_1_results.slope_Host), 'EPL slope of host halo'],
+        'ellipticity': [str([RS_1_results.macro_kwargs_list[0]['e1'],
+                             RS_1_results.macro_kwargs_list[0]['e2']]),
                         'Ellipticity values for host halo mass profile'],
         'light_profile': [light_profile_label, 'Light profile used for lens and source (INTERPOL or SERSIC)'],
     }
@@ -83,8 +83,8 @@ def collect_simulation_output(
     # Sersic-specific top-level metadata, so a SERSIC run is self-describing
     # alongside its image datasets.
     if is_sersic:
-        src_sp = dlu_2_results.source_sersic_params
-        dfr_sp = dlu_2_results.deflector_sersic_params
+        src_sp = RS_2_results.source_sersic_params
+        dfr_sp = RS_2_results.deflector_sersic_params
         datasets['source_sersic'] = [
             str(src_sp['R_sersic']), str(src_sp['n_sersic']),
             str(src_sp['e1']), str(src_sp['e2']),
@@ -98,39 +98,39 @@ def collect_simulation_output(
 
     # DM-type-specific metadata
     if DM_type == 'WDM':
-        datasets['log_mc'] = [str(dlu_1_results.type_kwargs['log_mc']),
+        datasets['log_mc'] = [str(RS_1_results.type_kwargs['log_mc']),
                               'Mass at which underneath the WDM mass function is surpressed when compared to CDM']
     elif DM_type == 'Axion':
-        datasets['m_axion'] = [str(dlu_1_results.type_kwargs['M_axion']),
+        datasets['m_axion'] = [str(RS_1_results.type_kwargs['M_axion']),
                                'log10 of mass of axion particle']
-        datasets['flucs_shape'] = [dlu_1_results.type_kwargs['flucs_shape'],
+        datasets['flucs_shape'] = [RS_1_results.type_kwargs['flucs_shape'],
                                    'Shape at which to render fluctuations of the host halo (See Pyhalo)']
-        datasets['flucs_args'] = [str(dlu_1_results.type_kwargs['flucs_args']['angle']),
-                                  str(dlu_1_results.type_kwargs['flucs_args']['rmin']),
-                                  str(dlu_1_results.type_kwargs['flucs_args']['rmax']),
+        datasets['flucs_args'] = [str(RS_1_results.type_kwargs['flucs_args']['angle']),
+                                  str(RS_1_results.type_kwargs['flucs_args']['rmin']),
+                                  str(RS_1_results.type_kwargs['flucs_args']['rmax']),
                                   'Arugments corresponding to geometry of host halo fluctuations (See Pyhalo)']
     elif DM_type == 'SIDM':
-        datasets['subhalo_mass_ranges'] = [str(dlu_1_results.type_kwargs['mass_ranges_subhalos']),
+        datasets['subhalo_mass_ranges'] = [str(RS_1_results.type_kwargs['mass_ranges_subhalos']),
                                            'Mass ranges at which subhalos are sampled from']
-        datasets['field_halo_mass_ranges'] = [str(dlu_1_results.type_kwargs['mass_ranges_field_halos']),
+        datasets['field_halo_mass_ranges'] = [str(RS_1_results.type_kwargs['mass_ranges_field_halos']),
                                               'Mass ranges at which field halos are sampled from']
-        datasets['prob_subhalo'] = [str(dlu_1_results.type_kwargs['probabilities_subhalos']),
+        datasets['prob_subhalo'] = [str(RS_1_results.type_kwargs['probabilities_subhalos']),
                                     'Probability of subhalo being sampled from corresponding mass range']
-        datasets['prob_field_halo'] = [str(dlu_1_results.type_kwargs['probabilities_field_halos']),
+        datasets['prob_field_halo'] = [str(RS_1_results.type_kwargs['probabilities_field_halos']),
                                        'Probability of field halo being sampled from corresponding mass range']
 
     # Image datasets: array data + per-band attrs. Iterates over the
     # instrument's actual bands rather than assuming three.
     image_datasets = {}
     for band_idx in range(n_bands):
-        band = dlu_2_results.band_labels[band_idx]
+        band = RS_2_results.band_labels[band_idx]
 
         attrs = {
             'filter': [band, 'Filter'],
-            'fov': [str(dlu_1_results.arcsecond_opening_angle), 'Field of view [arcsec]'],
-            'pixel_scale': [str(dlu_2_results.bands[band_idx]['pixel_scale']), 'Pixel scale [arcsec/pixel]'],
-            'lens_magnitude': [str(dlu_2_results.deflector_mag[band_idx]), 'Lens magnitude'],
-            'source_magnitude': [str(dlu_2_results.source_mag[band_idx]), 'Unlensed source galaxy magnitude'],
+            'fov': [str(RS_1_results.arcsecond_opening_angle), 'Field of view [arcsec]'],
+            'pixel_scale': [str(RS_2_results.bands[band_idx]['pixel_scale']), 'Pixel scale [arcsec/pixel]'],
+            'lens_magnitude': [str(RS_2_results.deflector_mag[band_idx]), 'Lens magnitude'],
+            'source_magnitude': [str(RS_2_results.source_mag[band_idx]), 'Unlensed source galaxy magnitude'],
             'units': ['counts', 'Units of pixel values'],
             'light_profile': [light_profile_label, 'Light profile used (INTERPOL or SERSIC)'],
         }
@@ -138,8 +138,8 @@ def collect_simulation_output(
         # In SERSIC mode, attach the per-galaxy shape params to each image
         # so the dataset is fully self-describing.
         if is_sersic:
-            src_sp = dlu_2_results.source_sersic_params
-            dfr_sp = dlu_2_results.deflector_sersic_params
+            src_sp = RS_2_results.source_sersic_params
+            dfr_sp = RS_2_results.deflector_sersic_params
             attrs['lens_R_sersic'] = [str(dfr_sp['R_sersic']), 'Deflector Sersic half-light radius [arcsec]']
             attrs['lens_n_sersic'] = [str(dfr_sp['n_sersic']), 'Deflector Sersic index']
             attrs['lens_e1'] = [str(dfr_sp['e1']), 'Deflector Sersic ellipticity component e1']
@@ -166,7 +166,7 @@ def collect_simulation_output(
     # instrument's actual bands rather than assuming three.
     unlensed_image_datasets = {}
     for band_idx in range(n_bands):
-        band = dlu_2_results.band_labels[band_idx]
+        band = RS_2_results.band_labels[band_idx]
         name = f'exposure_{i}_{band}_unlensed'
         unlensed_image_datasets[name] = {
             'data': np.asarray(image_results['img_unlensed'][band_idx]),

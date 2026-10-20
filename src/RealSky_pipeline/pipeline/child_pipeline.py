@@ -2,12 +2,12 @@ import os
 import numpy as np
 import time
 import traceback
-from new_pipeline_mp.sampling.sampler import sampler_master_function
-from new_pipeline_mp.physics.lens_builder import dlu_1
-from new_pipeline_mp.observations.observation_builder import make_bins
-from new_pipeline_mp.observations.observation_builder import dlu_2
-from new_pipeline_mp.simulation.simulation_builder import dlu_3_collect
-from new_pipeline_mp.simulation.output_writer import collect_simulation_output
+from RealSky_pipeline.sampling.sampler import sampler_master_function
+from RealSky_pipeline.physics.lens_builder import RS_1
+from RealSky_pipeline.observations.observation_builder import make_bins
+from RealSky_pipeline.observations.observation_builder import RS_2
+from RealSky_pipeline.simulation.simulation_builder import RS_3_collect
+from RealSky_pipeline.simulation.output_writer import collect_simulation_output
 
 
 # Module-level handle, populated once per worker process by worker_init().
@@ -65,24 +65,24 @@ def simulation_child(DM_type, instrument,light_profile, i, timestamp, nss=True):
 
         try:
             start0 = time.time()
-            dlu_1_results, redshifts = dlu_1(DM_type, sampled_vals)
+            RS_1_results, redshifts = RS_1(DM_type, sampled_vals)
             sampled_vals.redshifts = redshifts
 
             hsc_redshifts = np.array(_OBS_FILE['specz_redshift'])
             redshift_bin_edges = make_bins(hsc_redshifts)
 
-            # dlu_2's original signature, unchanged — it takes the open file.
-            dlu_2_results = dlu_2(instrument, _OBS_FILE,
+            # RS_2's original signature, unchanged — it takes the open file.
+            RS_2_results = RS_2(instrument, _OBS_FILE,
                                   sampled_vals.redshifts, redshift_bin_edges,light_profile=light_profile)
 
-            # dlu_3 split: computation only, no h5 writes. See note below.
-            setup_results, image_results = dlu_3_collect(
-                DM_type, instrument, sampled_vals, dlu_1_results, dlu_2_results,light_profile=light_profile, nss=nss
+            # RS_3 split: computation only, no h5 writes. See note below.
+            setup_results, image_results = RS_3_collect(
+                DM_type, instrument, sampled_vals, RS_1_results, RS_2_results,light_profile=light_profile, nss=nss
             )
 
             collected = collect_simulation_output(
                 i, DM_type, instrument, timestamp,
-                sampled_vals, dlu_1_results, dlu_2_results,
+                sampled_vals, RS_1_results, RS_2_results,
                 setup_results, image_results,
             )
 

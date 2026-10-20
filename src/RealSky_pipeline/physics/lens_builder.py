@@ -1,15 +1,15 @@
 import time
 import numpy as np
 
-from new_pipeline_mp.structures.dataclasses import dlu_1_output
-from new_pipeline_mp.physics.halo_constructors import (
+from RealSky_pipeline.structures.dataclasses import RS_1_output
+from RealSky_pipeline.physics.halo_constructors import (
     cdm_constructor,
     wdm_constructor,
     sidm_constructor,
     axion_constructor,
 )
 
-def dlu_1(DM_Type,sampled_vals,Interlopers = True):  
+def RS_1(DM_Type,sampled_vals,Interlopers = True):  
     '''Construct host halo, sub halos, and field halos realization using pyhalo'''
     start1 = time.time()
     
@@ -40,7 +40,7 @@ def dlu_1(DM_Type,sampled_vals,Interlopers = True):
             zsource = redshifts[1]
             if DM_Type == 'CDM':
                 lens_model_list,lens_kwargs_list,lens_redshift_list,cosmology,Macro_model_list, macro_kwargs_list, Macro_redshift_list,arcsecond_opening_angle,host_mass, whole_halo_mass,num_subhalos=cdm_constructor(zsource=zsource,zlens=zdeflector,M_host=M_host,host_theta_E_arcsec=host_theta_E_arcsec,max_subhalo_mass=max_subhalo_mass,Host_gamma=slope_Host,LOS_Norm=LOS)
-                results = dlu_1_output(lens_model_list=lens_model_list,
+                results = RS_1_output(lens_model_list=lens_model_list,
                                        lens_kwargs_list=lens_kwargs_list,
                                        lens_redshift_list=lens_redshift_list,
                                        cosmology=cosmology,
@@ -58,7 +58,7 @@ def dlu_1(DM_Type,sampled_vals,Interlopers = True):
                 return  results,redshifts
             elif DM_Type == 'WDM':
                 lens_model_list,lens_kwargs_list,lens_redshift_list,cosmology,Macro_model_list, macro_kwargs_list, Macro_redshift_list, log_mc, arcsecond_opening_angle,host_mass,whole_halo_mass, num_subhalos =wdm_constructor(zsource=zsource,zlens=zdeflector,M_host=M_host,host_theta_E_arcsec=host_theta_E_arcsec,max_subhalo_mass=max_subhalo_mass,Host_gamma=slope_Host,LOS_Norm=LOS)
-                results = dlu_1_output(lens_model_list=lens_model_list,
+                results = RS_1_output(lens_model_list=lens_model_list,
                                        lens_kwargs_list=lens_kwargs_list,
                                        lens_redshift_list=lens_redshift_list,
                                        cosmology=cosmology,
@@ -76,7 +76,7 @@ def dlu_1(DM_Type,sampled_vals,Interlopers = True):
                 return results,redshifts
             elif DM_Type == 'SIDM':
                 lens_model_list,lens_kwargs_list,lens_redshift_list,cosmology,Macro_model_list, macro_kwargs_list, Macro_redshift_list, mass_ranges_subhalos, mass_ranges_field_halos, probabilities_subhalos, probabilities_field_halos, arcsecond_opening_angle,host_mass,whole_halo_mass, num_subhalos=sidm_constructor(zsource=zsource,zlens=zdeflector,M_host=M_host,host_theta_E_arcsec=host_theta_E_arcsec,max_subhalo_mass=max_subhalo_mass,Host_gamma=slope_Host,LOS_Norm=LOS)
-                results = dlu_1_output(lens_model_list=lens_model_list,
+                results = RS_1_output(lens_model_list=lens_model_list,
                                        lens_kwargs_list=lens_kwargs_list,
                                        lens_redshift_list=lens_redshift_list,
                                        cosmology=cosmology,
@@ -94,7 +94,7 @@ def dlu_1(DM_Type,sampled_vals,Interlopers = True):
                 return results,redshifts
             elif DM_Type == 'Axion':
                 lens_model_list,lens_kwargs_list,lens_redshift_list,cosmology,Macro_model_list, macro_kwargs_list, Macro_redshift_list,arcsecond_opening_angle,M_axion,flucs_shape,flucs_args,host_mass,whole_halo_mass, num_subhalos=axion_constructor(zsource=zsource,zlens=zdeflector,M_host=M_host,host_theta_E_arcsec=host_theta_E_arcsec,max_subhalo_mass=max_subhalo_mass,Host_gamma=slope_Host,LOS_Norm=LOS)
-                results = dlu_1_output(lens_model_list=lens_model_list,
+                results = RS_1_output(lens_model_list=lens_model_list,
                                        lens_kwargs_list=lens_kwargs_list,
                                        lens_redshift_list=lens_redshift_list,
                                        cosmology=cosmology,

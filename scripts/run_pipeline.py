@@ -2,8 +2,8 @@
 import yaml
 import h5py
 
-from new_pipeline_mp.pipeline.parent_pipeline import simulation_parent
-from new_pipeline_mp.paths.paths import PROJECT_ROOT
+from RealSky_pipeline.pipeline.parent_pipeline import simulation_parent
+from RealSky_pipeline.paths.paths import PROJECT_ROOT
 
 def main():
     # Load config file

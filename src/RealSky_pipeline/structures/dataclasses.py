@@ -15,7 +15,7 @@ class sampled_values:
 
 @dataclass
 
-class dlu_1_output:
+class RS_1_output:
     lens_model_list:list
     lens_kwargs_list:list
     lens_redshift_list:list
@@ -33,7 +33,7 @@ class dlu_1_output:
 
  
 @dataclass
-class dlu_2_output:
+class RS_2_output:
     bands: list
     band_labels: list
     needed_hsc_bands: list
