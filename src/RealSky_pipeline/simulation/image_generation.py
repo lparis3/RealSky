@@ -137,9 +137,9 @@ def simulate(Instrument,kwargs_numerics,band_kwargs,lens_light_kwargs,source_lig
         image_i_flux = image_i_surface_brightness * band_kwargs[2]['pixel_scale']**2
         #units of e-counts/sec
 
-        image_g = (image_g_flux + sim_g.noise_for_model(model=image_g_flux,background_noise=False)) * band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures'] 
-        image_r = (image_r_flux + sim_r.noise_for_model(model=image_r_flux,background_noise=False))  * band_kwargs[1]['exposure_time'] * band_kwargs[1]['num_exposures'] 
-        image_i = (image_i_flux + sim_i.noise_for_model(model=image_i_flux,background_noise=False)) * band_kwargs[2]['exposure_time'] * band_kwargs[2]['num_exposures'] 
+        image_g = (image_g_flux + sim_g.noise_for_model(model=image_g_flux,background_noise=True)) * band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures'] 
+        image_r = (image_r_flux + sim_r.noise_for_model(model=image_r_flux,background_noise=True))  * band_kwargs[1]['exposure_time'] * band_kwargs[1]['num_exposures'] 
+        image_i = (image_i_flux + sim_i.noise_for_model(model=image_i_flux,background_noise=True)) * band_kwargs[2]['exposure_time'] * band_kwargs[2]['num_exposures'] 
         #Each output pixel in units of e counts 
 
         total_exposure_times = np.array([band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures'],band_kwargs[1]['exposure_time'] * band_kwargs[1]['num_exposures'],band_kwargs[2]['exposure_time'] * band_kwargs[2]['num_exposures'] ])
@@ -184,9 +184,9 @@ def simulate(Instrument,kwargs_numerics,band_kwargs,lens_light_kwargs,source_lig
         image_i_flux = image_i_surface_brightness * band_kwargs[2]['pixel_scale']**2
         #units of e-counts/sec
 
-        image_g = (image_g_flux + sim_g.noise_for_model(model=image_g_flux,background_noise=False)) * band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures'] 
-        image_r = (image_r_flux + sim_r.noise_for_model(model=image_r_flux,background_noise=False))  * band_kwargs[1]['exposure_time'] * band_kwargs[1]['num_exposures'] 
-        image_i = (image_i_flux + sim_i.noise_for_model(model=image_i_flux,background_noise=False)) * band_kwargs[2]['exposure_time'] * band_kwargs[2]['num_exposures'] 
+        image_g = (image_g_flux + sim_g.noise_for_model(model=image_g_flux,background_noise=True)) * band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures'] 
+        image_r = (image_r_flux + sim_r.noise_for_model(model=image_r_flux,background_noise=True))  * band_kwargs[1]['exposure_time'] * band_kwargs[1]['num_exposures'] 
+        image_i = (image_i_flux + sim_i.noise_for_model(model=image_i_flux,background_noise=True)) * band_kwargs[2]['exposure_time'] * band_kwargs[2]['num_exposures'] 
         #Each output pixel in units of e counts 
 
         total_exposure_times = np.array([band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures'],band_kwargs[1]['exposure_time'] * band_kwargs[1]['num_exposures'],band_kwargs[2]['exposure_time'] * band_kwargs[2]['num_exposures'] ])
@@ -227,7 +227,7 @@ def simulate(Instrument,kwargs_numerics,band_kwargs,lens_light_kwargs,source_lig
         image_VIS_flux = image_VIS_surface_brightness * band_kwargs[0]['pixel_scale']**2
         #units of e-counts/sec
 
-        image_VIS = (image_VIS_flux + sim_VIS.noise_for_model(model=image_VIS_flux,background_noise=False)) * band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures']
+        image_VIS = (image_VIS_flux + sim_VIS.noise_for_model(model=image_VIS_flux,background_noise=True)) * band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures']
         #Each output pixel in units of e counts
 
         total_exposure_times = np.array([band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures']])
@@ -272,8 +272,8 @@ def simulate(Instrument,kwargs_numerics,band_kwargs,lens_light_kwargs,source_lig
         # observation_builder.EXPOSURE_SCALING, so it is applied consistently to
         # both the noise model (via sim_FO*) and the image here -- matching the
         # other instruments. Do NOT reintroduce a post-multiply factor.
-        image_FO62 = (image_FO62_flux + sim_FO62.noise_for_model(model=image_FO62_flux,background_noise=False)) * band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures']
-        image_FO87 = (image_FO87_flux + sim_FO87.noise_for_model(model=image_FO87_flux,background_noise=False))  * band_kwargs[1]['exposure_time'] * band_kwargs[1]['num_exposures']
+        image_FO62 = (image_FO62_flux + sim_FO62.noise_for_model(model=image_FO62_flux,background_noise=True)) * band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures']
+        image_FO87 = (image_FO87_flux + sim_FO87.noise_for_model(model=image_FO87_flux,background_noise=True))  * band_kwargs[1]['exposure_time'] * band_kwargs[1]['num_exposures']
         #Each output pixel in units of e counts 
 
         total_exposure_times = np.array([band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures'],band_kwargs[1]['exposure_time'] * band_kwargs[1]['num_exposures']])
