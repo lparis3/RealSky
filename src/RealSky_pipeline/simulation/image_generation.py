@@ -130,16 +130,11 @@ def simulate(Instrument,kwargs_numerics,band_kwargs,lens_light_kwargs,source_lig
         image_g_surface_brightness = _lensed_source_sb(imSim_g, kwargs_source_g, ra_ref, dec_ref, beta_x, beta_y)
         image_r_surface_brightness = _lensed_source_sb(imSim_r, kwargs_source_r, ra_ref, dec_ref, beta_x, beta_y)
         image_i_surface_brightness = _lensed_source_sb(imSim_i, kwargs_source_i, ra_ref, dec_ref, beta_x, beta_y)
-        #units of e-counts/sec/arcsec^2
+        #units of e-counts/sec/pixel
 
-        image_g_flux = image_g_surface_brightness * band_kwargs[0]['pixel_scale']**2
-        image_r_flux = image_r_surface_brightness * band_kwargs[1]['pixel_scale']**2
-        image_i_flux = image_i_surface_brightness * band_kwargs[2]['pixel_scale']**2
-        #units of e-counts/sec
-
-        image_g = (image_g_flux + sim_g.noise_for_model(model=image_g_flux,background_noise=True)) * band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures'] 
-        image_r = (image_r_flux + sim_r.noise_for_model(model=image_r_flux,background_noise=True))  * band_kwargs[1]['exposure_time'] * band_kwargs[1]['num_exposures'] 
-        image_i = (image_i_flux + sim_i.noise_for_model(model=image_i_flux,background_noise=True)) * band_kwargs[2]['exposure_time'] * band_kwargs[2]['num_exposures'] 
+        image_g = (image_g_surface_brightness + sim_g.noise_for_model(model=image_g_surface_brightness,background_noise=True)) * band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures'] 
+        image_r = (image_r_surface_brightness + sim_r.noise_for_model(model=image_r_surface_brightness,background_noise=True))  * band_kwargs[1]['exposure_time'] * band_kwargs[1]['num_exposures'] 
+        image_i = (image_i_surface_brightness + sim_i.noise_for_model(model=image_i_surface_brightness,background_noise=True)) * band_kwargs[2]['exposure_time'] * band_kwargs[2]['num_exposures'] 
         #Each output pixel in units of e counts 
 
         total_exposure_times = np.array([band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures'],band_kwargs[1]['exposure_time'] * band_kwargs[1]['num_exposures'],band_kwargs[2]['exposure_time'] * band_kwargs[2]['num_exposures'] ])
@@ -153,9 +148,9 @@ def simulate(Instrument,kwargs_numerics,band_kwargs,lens_light_kwargs,source_lig
         # de_lensed=True renders the source with no ray-shooting; unconvolved=False
         # convolves the band PSF so the unlensed image matches the lensed image's PSF
         # treatment (set unconvolved=True to skip it if the INTERPOL input is already PSF'd).
-        image_g_unlensed = imSim_g.source_surface_brightness(kwargs_source_g, de_lensed=True, unconvolved=False) * band_kwargs[0]['pixel_scale']**2 * band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures']
-        image_r_unlensed = imSim_r.source_surface_brightness(kwargs_source_r, de_lensed=True, unconvolved=False) * band_kwargs[1]['pixel_scale']**2 * band_kwargs[1]['exposure_time'] * band_kwargs[1]['num_exposures']
-        image_i_unlensed = imSim_i.source_surface_brightness(kwargs_source_i, de_lensed=True, unconvolved=False) * band_kwargs[2]['pixel_scale']**2 * band_kwargs[2]['exposure_time'] * band_kwargs[2]['num_exposures']
+        image_g_unlensed = imSim_g.source_surface_brightness(kwargs_source_g, de_lensed=True, unconvolved=False) * band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures']
+        image_r_unlensed = imSim_r.source_surface_brightness(kwargs_source_r, de_lensed=True, unconvolved=False) * band_kwargs[1]['exposure_time'] * band_kwargs[1]['num_exposures']
+        image_i_unlensed = imSim_i.source_surface_brightness(kwargs_source_i, de_lensed=True, unconvolved=False) * band_kwargs[2]['exposure_time'] * band_kwargs[2]['num_exposures']
 
         return [image_g,image_r,image_i,total_exposure_times,kappa,[image_g_unlensed,image_r_unlensed,image_i_unlensed]]
 
@@ -177,16 +172,11 @@ def simulate(Instrument,kwargs_numerics,band_kwargs,lens_light_kwargs,source_lig
         image_g_surface_brightness = _lensed_source_sb(imSim_g, kwargs_source_g, ra_ref, dec_ref, beta_x, beta_y)
         image_r_surface_brightness = _lensed_source_sb(imSim_r, kwargs_source_r, ra_ref, dec_ref, beta_x, beta_y)
         image_i_surface_brightness = _lensed_source_sb(imSim_i, kwargs_source_i, ra_ref, dec_ref, beta_x, beta_y)
-        #units of e-counts/sec/arcsec^2
+        #units of e-counts/sec/pixel
 
-        image_g_flux = image_g_surface_brightness * band_kwargs[0]['pixel_scale']**2
-        image_r_flux = image_r_surface_brightness * band_kwargs[1]['pixel_scale']**2
-        image_i_flux = image_i_surface_brightness * band_kwargs[2]['pixel_scale']**2
-        #units of e-counts/sec
-
-        image_g = (image_g_flux + sim_g.noise_for_model(model=image_g_flux,background_noise=True)) * band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures'] 
-        image_r = (image_r_flux + sim_r.noise_for_model(model=image_r_flux,background_noise=True))  * band_kwargs[1]['exposure_time'] * band_kwargs[1]['num_exposures'] 
-        image_i = (image_i_flux + sim_i.noise_for_model(model=image_i_flux,background_noise=True)) * band_kwargs[2]['exposure_time'] * band_kwargs[2]['num_exposures'] 
+        image_g = (image_g_surface_brightness + sim_g.noise_for_model(model=image_g_surface_brightness,background_noise=True)) * band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures'] 
+        image_r = (image_r_surface_brightness + sim_r.noise_for_model(model=image_r_surface_brightness,background_noise=True))  * band_kwargs[1]['exposure_time'] * band_kwargs[1]['num_exposures'] 
+        image_i = (image_i_surface_brightness + sim_i.noise_for_model(model=image_i_surface_brightness,background_noise=True)) * band_kwargs[2]['exposure_time'] * band_kwargs[2]['num_exposures'] 
         #Each output pixel in units of e counts 
 
         total_exposure_times = np.array([band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures'],band_kwargs[1]['exposure_time'] * band_kwargs[1]['num_exposures'],band_kwargs[2]['exposure_time'] * band_kwargs[2]['num_exposures'] ])
@@ -200,9 +190,9 @@ def simulate(Instrument,kwargs_numerics,band_kwargs,lens_light_kwargs,source_lig
         # de_lensed=True renders the source with no ray-shooting; unconvolved=False
         # convolves the band PSF so the unlensed image matches the lensed image's PSF
         # treatment (set unconvolved=True to skip it if the INTERPOL input is already PSF'd).
-        image_g_unlensed = imSim_g.source_surface_brightness(kwargs_source_g, de_lensed=True, unconvolved=False) * band_kwargs[0]['pixel_scale']**2 * band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures']
-        image_r_unlensed = imSim_r.source_surface_brightness(kwargs_source_r, de_lensed=True, unconvolved=False) * band_kwargs[1]['pixel_scale']**2 * band_kwargs[1]['exposure_time'] * band_kwargs[1]['num_exposures']
-        image_i_unlensed = imSim_i.source_surface_brightness(kwargs_source_i, de_lensed=True, unconvolved=False) * band_kwargs[2]['pixel_scale']**2 * band_kwargs[2]['exposure_time'] * band_kwargs[2]['num_exposures']
+        image_g_unlensed = imSim_g.source_surface_brightness(kwargs_source_g, de_lensed=True, unconvolved=False) * band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures']
+        image_r_unlensed = imSim_r.source_surface_brightness(kwargs_source_r, de_lensed=True, unconvolved=False) * band_kwargs[1]['exposure_time'] * band_kwargs[1]['num_exposures']
+        image_i_unlensed = imSim_i.source_surface_brightness(kwargs_source_i, de_lensed=True, unconvolved=False) * band_kwargs[2]['exposure_time'] * band_kwargs[2]['num_exposures']
 
         return [image_g,image_r,image_i,total_exposure_times,kappa,[image_g_unlensed,image_r_unlensed,image_i_unlensed]]
 
@@ -222,12 +212,9 @@ def simulate(Instrument,kwargs_numerics,band_kwargs,lens_light_kwargs,source_lig
         image_r_surface_brightness = _lensed_source_sb(imSim_VIS, kwargs_source_r, ra_ref, dec_ref, beta_x, beta_y)
         image_i_surface_brightness = _lensed_source_sb(imSim_VIS, kwargs_source_i, ra_ref, dec_ref, beta_x, beta_y)
         image_VIS_surface_brightness = image_r_surface_brightness + image_i_surface_brightness
-        #units of e-counts/sec/arcsec^2
+        #units of e-counts/sec/pixel
 
-        image_VIS_flux = image_VIS_surface_brightness * band_kwargs[0]['pixel_scale']**2
-        #units of e-counts/sec
-
-        image_VIS = (image_VIS_flux + sim_VIS.noise_for_model(model=image_VIS_flux,background_noise=True)) * band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures']
+        image_VIS = (image_VIS_surface_brightness + sim_VIS.noise_for_model(model=image_VIS_surface_brightness,background_noise=True)) * band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures']
         #Each output pixel in units of e counts
 
         total_exposure_times = np.array([band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures']])
@@ -243,7 +230,7 @@ def simulate(Instrument,kwargs_numerics,band_kwargs,lens_light_kwargs,source_lig
         # matches the lensed PSF treatment (set unconvolved=True to skip it if already PSF'd).
         sb_r_unlensed = imSim_VIS.source_surface_brightness(kwargs_source_r, de_lensed=True, unconvolved=False)
         sb_i_unlensed = imSim_VIS.source_surface_brightness(kwargs_source_i, de_lensed=True, unconvolved=False)
-        image_VIS_unlensed = (sb_r_unlensed + sb_i_unlensed) * band_kwargs[0]['pixel_scale']**2 * band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures']
+        image_VIS_unlensed = (sb_r_unlensed + sb_i_unlensed) * band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures']
 
         return [image_VIS, total_exposure_times, kappa, [image_VIS_unlensed]]
 
@@ -262,18 +249,15 @@ def simulate(Instrument,kwargs_numerics,band_kwargs,lens_light_kwargs,source_lig
         ra_ref, dec_ref, beta_x, beta_y = _shared_deflection(imSim_FO62, lens_nonlight_kwargs)
         image_FO62_surface_brightness = _lensed_source_sb(imSim_FO62, kwargs_source_FO62, ra_ref, dec_ref, beta_x, beta_y)
         image_FO87_surface_brightness = _lensed_source_sb(imSim_FO87, kwargs_source_FO87, ra_ref, dec_ref, beta_x, beta_y)
-        #units of e-counts/sec/arcsec^2
+        #units of e-counts/sec/pixel
 
-        image_FO62_flux = image_FO62_surface_brightness * band_kwargs[0]['pixel_scale']**2
-        image_FO87_flux = image_FO87_surface_brightness * band_kwargs[1]['pixel_scale']**2
-        #units of e-counts/sec
 
         # num_exposures already carries the per-instrument scaling from
         # observation_builder.EXPOSURE_SCALING, so it is applied consistently to
         # both the noise model (via sim_FO*) and the image here -- matching the
         # other instruments. Do NOT reintroduce a post-multiply factor.
-        image_FO62 = (image_FO62_flux + sim_FO62.noise_for_model(model=image_FO62_flux,background_noise=True)) * band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures']
-        image_FO87 = (image_FO87_flux + sim_FO87.noise_for_model(model=image_FO87_flux,background_noise=True))  * band_kwargs[1]['exposure_time'] * band_kwargs[1]['num_exposures']
+        image_FO62 = (image_FO62_surface_brightness + sim_FO62.noise_for_model(model=image_FO62_surface_brightness,background_noise=True)) * band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures']
+        image_FO87 = (image_FO62_surface_brightness + sim_FO87.noise_for_model(model=image_FO62_surface_brightness,background_noise=True))  * band_kwargs[1]['exposure_time'] * band_kwargs[1]['num_exposures']
         #Each output pixel in units of e counts 
 
         total_exposure_times = np.array([band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures'],band_kwargs[1]['exposure_time'] * band_kwargs[1]['num_exposures']])
@@ -287,8 +271,8 @@ def simulate(Instrument,kwargs_numerics,band_kwargs,lens_light_kwargs,source_lig
         # de_lensed=True renders the source with no ray-shooting; unconvolved=False
         # convolves the band PSF so the unlensed image matches the lensed image's PSF
         # treatment (set unconvolved=True to skip it if the INTERPOL input is already PSF'd).
-        image_FO62_unlensed = imSim_FO62.source_surface_brightness(kwargs_source_FO62, de_lensed=True, unconvolved=False) * band_kwargs[0]['pixel_scale']**2 * band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures']
-        image_FO87_unlensed = imSim_FO87.source_surface_brightness(kwargs_source_FO87, de_lensed=True, unconvolved=False) * band_kwargs[1]['pixel_scale']**2 * band_kwargs[1]['exposure_time'] * band_kwargs[1]['num_exposures']
+        image_FO62_unlensed = imSim_FO62.source_surface_brightness(kwargs_source_FO62, de_lensed=True, unconvolved=False) * band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures']
+        image_FO87_unlensed = imSim_FO87.source_surface_brightness(kwargs_source_FO87, de_lensed=True, unconvolved=False) * band_kwargs[1]['exposure_time'] * band_kwargs[1]['num_exposures']
 
         return [image_FO62,image_FO87,total_exposure_times,kappa,[image_FO62_unlensed,image_FO87_unlensed]]
 
