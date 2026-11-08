@@ -4,6 +4,7 @@ import h5py
 
 def collect_simulation_output(
     i,
+    seed,
     DM_type,
     Instrument,
     timestamp,
@@ -67,6 +68,7 @@ def collect_simulation_output(
         'snr': [str(image_results['SNR']), 'SNR of lensed in all bands'],
         'theta_e': [str(RS_1_results.macro_kwargs_list[0]['theta_E']), 'Einstein radius in arcseconds'],
         'uid': [str(i), f'simulation number in {DM_type} batch created on {timestamp}'],
+        'seed': [str(seed), f'RNG seed used to initialized RNG functions from both torch and numpy'],
         'z_lens': [str(zdeflector), 'Redshift of deflector'],
         'z_source': [str(zsource), 'Redshift of source'],
         'bands': bands_entry,

@@ -2,7 +2,7 @@ import os
 import datetime
 import multiprocessing as mp
 from functools import partial
-
+import secrets
 import h5py
 
 from RealSky_pipeline.pipeline.child_pipeline import (
@@ -44,6 +44,9 @@ def simulation_parent(DM_Types, instruments, sim_number_per_permutation,light_pr
             f"observational_data_path does not exist: {observational_data_path}"
         )
 
+    #Create a unique base seed on the level of the parent process for each pipeline run
+    base_seed = secrets.randbits(32)   # fresh every run
+    
     timestamp = datetime.datetime.now().strftime("[%Y-%m-%d]")
 
     run_dir = f'./{output_dir}/RealSky_{timestamp}'
@@ -82,7 +85,7 @@ def simulation_parent(DM_Types, instruments, sim_number_per_permutation,light_pr
                 with mp.Pool(
                     processes=n_workers,
                     initializer=worker_init,
-                    initargs=(observational_data_path,),
+                    initargs=(observational_data_path,base_seed,),
                 ) as pool:
                     for dm_t, inst, sim_i, collected in pool.imap_unordered(
                             worker_fn, work_items, chunksize=1):

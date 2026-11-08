@@ -2,6 +2,8 @@ import os
 import numpy as np
 import time
 import traceback
+import zlib
+import torch
 from RealSky_pipeline.sampling.sampler import sampler_master_function
 from RealSky_pipeline.physics.lens_builder import RS_1
 from RealSky_pipeline.observations.observation_builder import make_bins
@@ -14,10 +16,12 @@ from RealSky_pipeline.simulation.output_writer import collect_simulation_output
 # Each worker opens its own read-only handle to the observational data file.
 # Reading from HDF5 in parallel across separate processes is safe as long as
 # no one is writing to the file.
+
+
 _OBS_FILE = None
 
 
-def worker_init(observational_data_path):
+def worker_init(observational_data_path, base_seed):
     """
     Pool initializer: runs once when each worker process starts.
 
@@ -25,14 +29,11 @@ def worker_init(observational_data_path):
     in a module-level global so every simulation this worker runs can reuse it
     without re-opening.
     """
-    global _OBS_FILE
+    global _OBS_FILE, _BASE_SEED
     import h5py
     _OBS_FILE = h5py.File(observational_data_path, 'r')
 
-    # Re-seed numpy RNG once per worker. Without this, fork-based workers all
-    # inherit identical numpy random state from the parent.
-    np.random.seed(os.getpid() % (2**32 - 1))
-
+    _BASE_SEED = base_seed
 
 def simulation_child(DM_type, instrument,light_profile, i, timestamp, nss=True):
     """
@@ -52,9 +53,17 @@ def simulation_child(DM_type, instrument,light_profile, i, timestamp, nss=True):
 
     sim_id = f"{DM_type}_{instrument}_{i}"
 
-    # Mix sim index into RNG state so different sims on the same worker
-    # don't repeat identical streams.
-    np.random.seed((os.getpid() * 100003 + i) % (2**32 - 1))
+    
+    def _sim_seed(DM_type, instrument, i, base_seed=12345):
+        # Creates unique seed for each child_process
+        key = zlib.crc32(f"{DM_type}|{instrument}".encode())
+        return int(np.random.SeedSequence([base_seed, key, i]).generate_state(1)[0])
+
+    #Creates a unique seed for each child process
+    seed = _sim_seed(DM_type, instrument, i)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+
 
     #NOTE:If instrument is Roman_VIS, FORCE sersic profile (smearing from hsc image psf will eliminate all benefit of Romans resolution)
     if instrument == "Roman_VIS":
@@ -81,7 +90,7 @@ def simulation_child(DM_type, instrument,light_profile, i, timestamp, nss=True):
             )
 
             collected = collect_simulation_output(
-                i, DM_type, instrument, timestamp,
+                i, seed, DM_type, instrument, timestamp,
                 sampled_vals, RS_1_results, RS_2_results,
                 setup_results, image_results,
             )
