@@ -257,7 +257,7 @@ def simulate(Instrument,kwargs_numerics,band_kwargs,lens_light_kwargs,source_lig
         # both the noise model (via sim_FO*) and the image here -- matching the
         # other instruments. Do NOT reintroduce a post-multiply factor.
         image_FO62 = (image_FO62_surface_brightness + sim_FO62.noise_for_model(model=image_FO62_surface_brightness,background_noise=True)) * band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures']
-        image_FO87 = (image_FO62_surface_brightness + sim_FO87.noise_for_model(model=image_FO62_surface_brightness,background_noise=True))  * band_kwargs[1]['exposure_time'] * band_kwargs[1]['num_exposures']
+        image_FO87 = (image_FO87_surface_brightness + sim_FO87.noise_for_model(model=image_FO62_surface_brightness,background_noise=True))  * band_kwargs[1]['exposure_time'] * band_kwargs[1]['num_exposures']
         #Each output pixel in units of e counts 
 
         total_exposure_times = np.array([band_kwargs[0]['exposure_time'] * band_kwargs[0]['num_exposures'],band_kwargs[1]['exposure_time'] * band_kwargs[1]['num_exposures']])
