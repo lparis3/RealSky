@@ -54,7 +54,7 @@ def simulation_child(DM_type, instrument,light_profile, i, timestamp, nss=True):
     sim_id = f"{DM_type}_{instrument}_{i}"
 
     
-    def _sim_seed(DM_type, instrument, i, base_seed=12345):
+    def _sim_seed(DM_type, instrument, i, base_seed=_BASE_SEED):
         # Creates unique seed for each child_process
         key = zlib.crc32(f"{DM_type}|{instrument}".encode())
         return int(np.random.SeedSequence([base_seed, key, i]).generate_state(1)[0])
