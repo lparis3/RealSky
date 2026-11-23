@@ -264,6 +264,8 @@ references:
       - type: other
         value: "arXiv:2201.01300"
 
+  # --- Original Camels Paper ---
+
   - type: article
     title: "The CAMELS Project: Cosmology and Astrophysics with Machine-learning Simulations"
     authors:
