@@ -264,8 +264,6 @@ references:
       - type: other
         value: "arXiv:2201.01300"
 
-  # Recommended on the CAMELS citation page; introduces the original suites
-  # (including the IllustrisTNG CV set).
   - type: article
     title: "The CAMELS Project: Cosmology and Astrophysics with Machine-learning Simulations"
     authors:
